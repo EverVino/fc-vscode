@@ -1,0 +1,9 @@
+---
+title: Installing VS Code
+description: Learn how to download and install VS Code on your computer.
+unit_order: 1
+unit_level: Beginner
+estimated_time: "15 min"
+---
+
+# Installing VSCode

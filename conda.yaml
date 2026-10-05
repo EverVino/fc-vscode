@@ -1,0 +1,13 @@
+name: free-campus
+
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  - python >=3.10
+  - quarto
+  - pip
+  - pip:
+      - makim==1.29.0
+      - click # makim dependency

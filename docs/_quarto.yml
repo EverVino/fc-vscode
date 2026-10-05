@@ -1,0 +1,84 @@
+project:
+  type: website
+  output-dir: _site
+website:
+  title: FreeCampus VSCode
+  description: A beginner-first Visual Studio Code encounter.
+  site-url: https://freecampus.github.io/vscode/
+  repo-url: https://github.com/freecampus/vscode
+  repo-actions:
+    - edit
+    - issue
+  page-navigation: true
+  back-to-top-navigation: true
+  reader-mode: true
+  bread-crumbs: false
+  navbar:
+    logo: assets/freecampus-mark.svg
+    logo-alt: FreeCampus VSCode
+    search: true
+    collapse-below: lg
+    left:
+      - text: Home 
+        href: index.qmd
+      - text: Units
+        menu:
+          - href: units/index.qmd
+            text: All units
+          - text: "---"
+          # TODO: Add units here
+          - href: units/first-unit/index.qmd
+            text: Installation
+      # - text: FAQ
+      #   href: resources/faq/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/freecampus/vscode
+        aria-label: GitHub repository
+  sidebar:
+    - title: Statistics with Python
+      style: floating
+      border: false
+      search: true
+      collapse-level: 1
+      contents:
+        - href: courses/statistics-python/index.qmd
+          text: Overview
+  page-footer:
+    left: FreeCampus VS Code — learn by doing.
+    center: Course content updated 26 September 2026
+    right:
+      - text: GitHub
+        href: https://github.com/freecampus/python
+format:
+  html:
+    brand: _brand.yml
+    theme:
+      light:
+        - journal
+        - theme-light.scss
+      dark:
+        - darkly
+        - theme-dark.scss
+    css:
+      - styles.css
+      - components/learning-shell.css
+      - components/landing.css
+      - components/catalog-faq.css
+      - components/course-portfolio.css
+      - components/responsive.css
+    template-partials:
+      - _partials/title-block.html
+    include-after-body:
+      - _includes/course-ui.html
+    toc: true
+    toc-title: On this page
+    toc-depth: 3
+    smooth-scroll: true
+    code-copy: true
+    code-overflow: wrap
+    code-line-numbers: true
+    link-external-newwindow: true
+execute:
+  freeze: auto
+  eval: false

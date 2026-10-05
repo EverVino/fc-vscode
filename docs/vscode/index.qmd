@@ -1,0 +1,38 @@
+---
+title: VSCode Units
+description: Explore our beginner-friendly VS Code units.
+page-layout: full
+sidebar: false
+toc: false
+page-navigation: false
+body-classes: "course-hub portfolio-hub"
+listing:
+  - id: unit-catalog
+    contents:
+      - statistics-python/index.qmd
+    sort: "unit_order"
+    template: _listings/unit-card.ejs.md
+    fields:
+      - title
+      - description
+      - unit_order
+      - unit_level
+      - estimated_time
+    filter-ui: false
+    sort-ui: false
+---
+
+## Choose your next skill
+
+Start with **Setting up VS Code** if programming is new to you. If you already
+know VS Code, got for the one you matches you.
+
+::: {#course-catalog .fc-course-catalog data-fc-catalog=""}
+:::
+
+::: {.callout-note title="Course status and certificates"}
+TODO : Add a notes about the content or estimated time 
+browser completion is not a verified credential.
+:::
+
+[Compare prerequisites and pathways](../pathways/index.qmd){.btn .btn-outline-primary}

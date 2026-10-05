@@ -1,0 +1,80 @@
+---
+title: FreeCampus VS Code
+description: Visual Studio Code is a Code Editor. It is where you write, edit and organize your code.
+page-layout: full
+sidebar: false
+toc: false
+page-navigation: false
+body-classes: landing-page
+---
+
+::: {.hero}
+
+::: {.hero-copy}
+
+::: {.hero-kicker}
+All units you need
+:::
+
+# Unlock the full potential of Visual Studio Code
+
+This introductory course on Visual Studio Code (VSCode) for 
+beginners will cover everything from setting up VSCode to mastering its features, 
+including debugging, extensions, and collaboration. Ideal for those looking to start coding 
+efficiently with the most popular code editor.
+
+::: {.hero-actions}
+[Start with VsCode](){.btn .btn-primary .btn-lg}
+[Explore all units](courses/index.qmd){.btn .btn-outline-primary .btn-lg}
+:::
+
+::: {.hero-stats}
+
+::: {.hero-stat}
+**4**
+focused units
+:::
+
+::: {.hero-stat}
+**4**
+Independent units
+:::
+
+:::
+:::
+
+::: {.hero-demo aria-label="A VS Code UI"}
+```{=html}
+<div class="fc-demo-window">
+  <img src="https://images-eds-ssl.xboxlive.com/image?url=4rt9.lXDC4H_93laV1_eHHFT949fUipzkiFOBH3fAiZZUCdYojwUyX2aTonS1aIwMrx6NUIsHfUHSLzjGJFxxj7kCzMIlSC20SNjaJf9GmESvWFqgy6FNrwzWSIu2lzePyWSz8zg09RAX43OFexidzEE3_7l3auaKk4w9ktJdqg-&format=source" alt="VSCode logo">
+  <h1 class="fc-code-title"> Visual Studio Code </h1>
+</div>
+
+```
+:::
+:::
+
+::: {.course-grid .audience-grid}
+
+::: {.course-card}
+### Want to learn more?
+
+Visit the official documentation page [Visual Studio Code documentation](https://code.visualstudio.com/docs)
+:::
+
+:::
+
+## How every unit works
+
+::: {.learning-loop}
+1. **Read** the unit.
+2. **Try it** locally.
+3. **Apply it** to your own projects.
+:::
+
+
+## Shared help
+
+- Use the [VS Code FAQ]() when an error or output surprises you.
+- Open the [full course catalog]() whenever you want to switch
+  pathways.

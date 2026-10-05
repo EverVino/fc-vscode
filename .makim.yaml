@@ -1,0 +1,35 @@
+groups:
+  all:
+    tasks:
+      ci:
+        help: Run lint, tests, package build, and docs build
+        hooks:
+          pre-run:
+            - task: tests.linter
+            - task: tests.unit
+            - task: package.build
+            - task: docs.build
+
+  docs:
+    tasks:
+      build:
+        help: Build the Quarto documentation website
+        backend: bash
+        run: |
+          quarto render docs --no-execute-daemon
+
+      render:
+        help: Alias for docs.build
+        hooks:
+          pre-run:
+            - task: docs.build
+
+      preview:
+        help: Preview the Quarto documentation website locally
+        backend: bash
+        hooks:
+          pre-run:
+            - task: docs.build
+        run: |
+          quarto preview docs
+

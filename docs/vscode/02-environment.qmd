@@ -1,0 +1,9 @@
+---
+title: Getting started
+description: Get familiar with the main components of VS Code.
+unit_order: 2
+unit_level: Beginner
+estimated_time: "20 min"
+---
+
+# Getting started

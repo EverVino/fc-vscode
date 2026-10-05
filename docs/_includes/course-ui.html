@@ -1,0 +1,845 @@
+<script>
+  (() => {
+    "use strict";
+
+    const progressKey = "fcpython.progress.v6";
+    const lastLessonKey = "fcpython.last-lesson.v6";
+
+    function readJson(key, fallback) {
+      try {
+        return JSON.parse(window.localStorage.getItem(key)) || fallback;
+      } catch (_error) {
+        return fallback;
+      }
+    }
+
+    function writeJson(key, value) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch (_error) {
+        // The course remains usable when browser storage is unavailable.
+      }
+    }
+
+    function pageKey(value = window.location.href) {
+      const url = new URL(value, window.location.href);
+      const match = url.pathname.match(
+        /\/(lessons|courses|resources|pathways)\//,
+      );
+
+      if (!match) {
+        return "home";
+      }
+
+      return url.pathname
+        .slice(match.index + 1)
+        .replace(/\.(html|qmd)$/, "")
+        .replace(/\/index$/, "")
+        .replace(/\/$/, "");
+    }
+
+    function siteBasePath() {
+      const pathname = window.location.pathname;
+      const match = pathname.match(/\/(lessons|courses|resources|pathways)\//);
+
+      if (match) {
+        return pathname.slice(0, match.index + 1);
+      }
+
+      return pathname.replace(/[^/]*$/, "");
+    }
+
+    function hrefForKey(key) {
+      return `${siteBasePath()}${key}.html`;
+    }
+
+    function markSameOriginLinksInternal() {
+      const currentOrigin = new URL(window.location.href).origin;
+      document.querySelectorAll("a[href]").forEach((link) => {
+        try {
+          const destination = new URL(link.href, window.location.href);
+          if (destination.origin === currentOrigin) {
+            link.classList.add("no-external");
+          }
+        } catch (_error) {
+          // Leave malformed destinations unchanged for the browser to handle.
+        }
+      });
+    }
+
+    function isChallengeKey(key) {
+      const parts = key.split("/");
+      return (
+        parts[0] === "courses" &&
+        parts[2] === "units" &&
+        parts.length === 5 &&
+        parts[4] === "challenge"
+      );
+    }
+
+    function challengeIdFromKey(key) {
+      if (!isChallengeKey(key)) {
+        return "";
+      }
+      return `${key.split("/")[3]}.challenge`;
+    }
+
+    function isLessonKey(key) {
+      const parts = key.split("/");
+      const unitLesson =
+        parts[0] === "courses" && parts[2] === "units" && parts.length >= 5;
+      const directCourseLesson =
+        parts[0] === "courses" && parts[2] !== "units" && parts.length >= 4;
+      return (unitLesson || directCourseLesson) && !isChallengeKey(key);
+    }
+
+    function isProjectKey(key) {
+      return key.startsWith("courses/") && key.endsWith("/project");
+    }
+
+    function lessonIdFromKey(key) {
+      if (!isLessonKey(key)) {
+        return "";
+      }
+      const parts = key.split("/");
+      const lessonParts =
+        parts[2] === "units" ? parts.slice(3) : parts.slice(2);
+      return lessonParts.join(".");
+    }
+
+    function emptyProgress() {
+      return { schema_version: 6, courses: {} };
+    }
+
+    function readProgress() {
+      const saved = readJson(progressKey, null);
+      if (!saved || saved.schema_version !== 6 || !saved.courses) {
+        return emptyProgress();
+      }
+      return saved;
+    }
+
+    const progress = readProgress();
+    const currentKey = pageKey();
+    const sidebar = document.querySelector("#quarto-sidebar");
+    const titleBlock = document.querySelector("#title-block-header");
+    const lessonMeta = document.querySelector(".lesson-meta");
+    const courseId = titleBlock?.dataset.fcCourseId || "";
+    const courseTitle = titleBlock?.dataset.fcCourseTitle || "";
+    const courseHome = titleBlock?.dataset.fcCourseHome || "";
+    const challengeId = titleBlock?.dataset.fcChallengeId || "";
+    const projectId = titleBlock?.dataset.fcProjectId || "";
+    const lessonId =
+      titleBlock?.dataset.fcLessonId || lessonIdFromKey(currentKey);
+    const isFaq =
+      currentKey === "resources/faq" ||
+      currentKey.startsWith("resources/faq/") ||
+      currentKey === "lessons/faq" ||
+      currentKey.startsWith("lessons/faq/");
+    const isTrackable = Boolean(
+      lessonMeta &&
+        courseId &&
+        lessonId &&
+        !challengeId &&
+        !projectId &&
+        !isFaq,
+    );
+
+    function courseState(id, create = false) {
+      if (!id) {
+        return null;
+      }
+      if (!progress.courses[id] && create) {
+        progress.courses[id] = {
+          curriculum_version: 21,
+          completion_rule_version: 12,
+          completed_lessons: {},
+          completed_challenges: {},
+          capstone_status: "not_started",
+          completion_status: "in_progress",
+          completed_at: null,
+          updated_at: null,
+        };
+      }
+      const state = progress.courses[id] || null;
+      if (state) {
+        state.curriculum_version = 21;
+        state.completion_rule_version = 12;
+        state.completed_lessons = state.completed_lessons || {};
+        state.completed_challenges = state.completed_challenges || {};
+        state.capstone_status = state.capstone_status || "not_started";
+        state.completion_status = state.completion_status || "in_progress";
+        state.completed_at = state.completed_at || null;
+      }
+      return state;
+    }
+
+    function completedLessons(id) {
+      return courseState(id)?.completed_lessons || {};
+    }
+
+    function completedChallenges(id) {
+      return courseState(id)?.completed_challenges || {};
+    }
+
+    function courseLessonLinks() {
+      const links = [
+        ...(sidebar?.querySelectorAll("a.sidebar-link[href]") || []),
+      ];
+      const seen = new Set();
+      return links.filter((link) => {
+        const key = pageKey(link.href);
+        if (!isLessonKey(key) || seen.has(key)) {
+          return false;
+        }
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function courseActivityLinks(id) {
+      const prefix = `courses/${id}/`;
+      const seen = new Set();
+      const links = [
+        ...(sidebar?.querySelectorAll("a.sidebar-link[href]") || []),
+      ];
+      return links.filter((link) => {
+        const key = pageKey(link.href);
+        const isActivity =
+          isLessonKey(key) || isChallengeKey(key) || isProjectKey(key);
+        if (!key.startsWith(prefix) || !isActivity || seen.has(key)) {
+          return false;
+        }
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function courseActivityIsComplete(id, key) {
+      const activityLessonId = lessonIdFromKey(key);
+      const activityChallengeId = challengeIdFromKey(key);
+      if (activityLessonId) {
+        return Boolean(completedLessons(id)[activityLessonId]);
+      }
+      if (activityChallengeId) {
+        return Boolean(completedChallenges(id)[activityChallengeId]);
+      }
+      return Boolean(
+        isProjectKey(key) && courseState(id)?.capstone_status === "complete",
+      );
+    }
+
+    function idsFromDataset(value) {
+      return (value || "").split(/\s+/).filter(Boolean);
+    }
+
+    function countRecorded(ids, record) {
+      return ids.filter((id) => Boolean(record[id])).length;
+    }
+
+    function sidebarChallengeIds() {
+      const links = [
+        ...(sidebar?.querySelectorAll("a.sidebar-link[href]") || []),
+      ];
+      return [
+        ...new Set(
+          links
+            .map((link) => challengeIdFromKey(pageKey(link.href)))
+            .filter(Boolean),
+        ),
+      ];
+    }
+
+    function sidebarRequiresProject() {
+      return Boolean(
+        sidebar &&
+          [...sidebar.querySelectorAll("a.sidebar-link[href]")].some((link) =>
+            isProjectKey(pageKey(link.href)),
+          ),
+      );
+    }
+
+    function syncCourseCompletionState() {
+      const state = courseState(courseId);
+      const challengeIds = sidebarChallengeIds();
+      const projectRequired = sidebarRequiresProject();
+      if (!state || (!challengeIds.length && !projectRequired)) {
+        return false;
+      }
+
+      const lessonIds = courseLessonLinks().map((link) =>
+        lessonIdFromKey(pageKey(link.href)),
+      );
+      const complete =
+        countRecorded(lessonIds, state.completed_lessons) ===
+          lessonIds.length &&
+        countRecorded(challengeIds, state.completed_challenges) ===
+          challengeIds.length &&
+        (!projectRequired || state.capstone_status === "complete");
+      const nextStatus = complete ? "complete" : "in_progress";
+      let changed = state.completion_status !== nextStatus;
+      state.completion_status = nextStatus;
+
+      if (complete && !state.completed_at) {
+        state.completed_at = new Date().toISOString();
+        changed = true;
+      } else if (!complete && state.completed_at) {
+        state.completed_at = null;
+        changed = true;
+      }
+      return changed;
+    }
+
+    function completionSnapshot(root, id) {
+      const lessonIds = idsFromDataset(root.dataset.courseLessonIds);
+      const challengeIds = idsFromDataset(root.dataset.courseChallengeIds);
+      const projectRequired = root.dataset.courseProjectRequired === "true";
+      const structured = Boolean(
+        lessonIds.length || challengeIds.length || projectRequired,
+      );
+      const lessonTotal =
+        lessonIds.length || Number(root.dataset.courseTotal) || 0;
+      const lessonCompleted = lessonIds.length
+        ? countRecorded(lessonIds, completedLessons(id))
+        : Math.min(lessonTotal, Object.keys(completedLessons(id)).length);
+      const challengeCompleted = countRecorded(
+        challengeIds,
+        completedChallenges(id),
+      );
+      const projectCompleted =
+        projectRequired && courseState(id)?.capstone_status === "complete"
+          ? 1
+          : 0;
+      const total = structured
+        ? lessonTotal + challengeIds.length + (projectRequired ? 1 : 0)
+        : lessonTotal;
+      const completed = structured
+        ? lessonCompleted + challengeCompleted + projectCompleted
+        : lessonCompleted;
+
+      return {
+        structured,
+        completed,
+        total,
+        lessonCompleted,
+        lessonTotal,
+        challengeCompleted,
+        challengeTotal: challengeIds.length,
+        projectCompleted: Boolean(projectCompleted),
+      };
+    }
+
+    function currentUnit() {
+      const active = sidebar?.querySelector("a.sidebar-link.active");
+      const group = active?.closest("ul.sidebar-section");
+      const groupRoot = group?.closest("li.sidebar-item-section");
+      const label = groupRoot
+        ?.querySelector(":scope > .sidebar-item-container .menu-text")
+        ?.textContent.trim();
+      const links = group
+        ? [...group.querySelectorAll("a.sidebar-link[href]")]
+        : [];
+      const lessonLinks = links.filter((link) =>
+        isLessonKey(pageKey(link.href)),
+      );
+      const position = lessonLinks.findIndex(
+        (link) => pageKey(link.href) === currentKey,
+      );
+
+      return { label, lessonLinks, position };
+    }
+
+    function enrichTitle() {
+      const context = document.querySelector("[data-fc-context]");
+      const position = document.querySelector("[data-fc-position]");
+      const chips = document.querySelector("[data-fc-title-chips]");
+      const unit = currentUnit();
+
+      if (context) {
+        if (isFaq) {
+          context.textContent = "Python FAQ";
+        } else if (courseTitle && (isTrackable || challengeId || projectId)) {
+          context.textContent = courseTitle;
+        } else if (courseId && currentKey.startsWith("courses/")) {
+          context.textContent = "FreeCampus course";
+        } else if (currentKey === "courses") {
+          context.textContent = "Python course portfolio";
+        } else if (currentKey === "pathways") {
+          context.textContent = "Choose your pathway";
+        } else if (currentKey.startsWith("resources/")) {
+          context.textContent = "Shared learning resource";
+        }
+      }
+
+      if (position && isTrackable && unit.position >= 0) {
+        position.textContent = `${unit.label || "Unit"} · Lesson ${
+          unit.position + 1
+        } of ${unit.lessonLinks.length}`;
+      } else if (position && challengeId) {
+        position.textContent = "Unit challenge";
+      } else if (position && projectId) {
+        position.textContent = "Course project";
+      }
+
+      chips?.querySelectorAll(".fc-title-chip").forEach((chip) => {
+        chip.textContent = chip.textContent
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ");
+      });
+    }
+
+    function paintSidebarCompletion() {
+      if (!sidebar || !courseId) {
+        return;
+      }
+
+      const completed = completedLessons(courseId);
+      const challenges = completedChallenges(courseId);
+      const projectComplete =
+        courseState(courseId)?.capstone_status === "complete";
+      sidebar.querySelectorAll("a.sidebar-link[href]").forEach((link) => {
+        const key = pageKey(link.href);
+        const id = lessonIdFromKey(key);
+        const sidebarChallengeId = challengeIdFromKey(key);
+        const complete =
+          Boolean(id && completed[id]) ||
+          Boolean(sidebarChallengeId && challenges[sidebarChallengeId]) ||
+          Boolean(isProjectKey(key) && projectComplete);
+        link.classList.toggle("fc-is-complete", complete);
+      });
+    }
+
+    function updateProgressHeader() {
+      const root = document.querySelector("[data-fc-lesson-progress]");
+      const button = document.querySelector("[data-fc-complete]");
+
+      if (!isTrackable || !root || !button) {
+        return;
+      }
+
+      const lessonIds = courseLessonLinks().map((link) =>
+        lessonIdFromKey(pageKey(link.href)),
+      );
+      const total = lessonIds.length;
+      const completed = countRecorded(lessonIds, completedLessons(courseId));
+      const percent = total ? Math.round((completed / total) * 100) : 0;
+      const isComplete = Boolean(completedLessons(courseId)[lessonId]);
+      const label = button.querySelector("[data-fc-complete-label]");
+      const track = root.querySelector("[data-fc-progress-track]");
+
+      root.hidden = false;
+      button.hidden = false;
+      button.setAttribute("aria-pressed", String(isComplete));
+      button.classList.toggle("is-complete", isComplete);
+      if (label) {
+        label.textContent = isComplete
+          ? "Lesson complete"
+          : "Mark lesson complete";
+      }
+
+      root.querySelector(
+        "[data-fc-progress-label]",
+      ).textContent = `${completed} of ${total} lessons complete`;
+      root.querySelector(
+        "[data-fc-progress-value]",
+      ).textContent = `${percent}%`;
+      root.querySelector("[data-fc-progress-bar]").style.width = `${percent}%`;
+      track?.setAttribute("aria-valuenow", String(percent));
+    }
+
+    function setupCompletionButton() {
+      const button = document.querySelector("[data-fc-complete]");
+      if (!button || !isTrackable) {
+        return;
+      }
+
+      button.addEventListener("click", () => {
+        const state = courseState(courseId, true);
+        if (state.completed_lessons[lessonId]) {
+          delete state.completed_lessons[lessonId];
+        } else {
+          state.completed_lessons[lessonId] = new Date().toISOString();
+        }
+        state.updated_at = new Date().toISOString();
+        syncCourseCompletionState();
+        writeJson(progressKey, progress);
+        paintSidebarCompletion();
+        updateProgressHeader();
+        setupCourseOverview();
+      });
+    }
+
+    function updateChallengeButton() {
+      const button = document.querySelector("[data-fc-challenge-complete]");
+      const status = document.querySelector("[data-fc-challenge-status]");
+      if (!button || !courseId || !challengeId) {
+        return;
+      }
+
+      const complete = Boolean(completedChallenges(courseId)[challengeId]);
+      const label = button.querySelector("[data-fc-challenge-complete-label]");
+      button.setAttribute("aria-pressed", String(complete));
+      button.classList.toggle("is-complete", complete);
+      if (label) {
+        label.textContent = complete
+          ? "Challenge recorded"
+          : "Record challenge complete";
+      }
+      if (status) {
+        status.textContent = complete
+          ? "Recorded in this browser. Select again to undo."
+          : "Not yet recorded.";
+      }
+    }
+
+    function setupChallengeButton() {
+      const button = document.querySelector("[data-fc-challenge-complete]");
+      if (!button || !courseId || !challengeId) {
+        return;
+      }
+
+      updateChallengeButton();
+      button.addEventListener("click", () => {
+        const state = courseState(courseId, true);
+        if (state.completed_challenges[challengeId]) {
+          delete state.completed_challenges[challengeId];
+        } else {
+          state.completed_challenges[challengeId] = new Date().toISOString();
+        }
+        state.updated_at = new Date().toISOString();
+        syncCourseCompletionState();
+        writeJson(progressKey, progress);
+        paintSidebarCompletion();
+        updateChallengeButton();
+      });
+    }
+
+    function updateProjectButton() {
+      const button = document.querySelector("[data-fc-project-complete]");
+      const status = document.querySelector("[data-fc-project-status]");
+      if (!button || !courseId || !projectId) {
+        return;
+      }
+
+      const complete = courseState(courseId)?.capstone_status === "complete";
+      const label = button.querySelector("[data-fc-project-complete-label]");
+      button.setAttribute("aria-pressed", String(complete));
+      button.classList.toggle("is-complete", complete);
+      if (label) {
+        label.textContent = complete
+          ? "Project recorded"
+          : "Record project complete";
+      }
+      if (status) {
+        status.textContent = complete
+          ? "Recorded in this browser. Select again to undo."
+          : "Not yet recorded.";
+      }
+    }
+
+    function setupProjectButton() {
+      const button = document.querySelector("[data-fc-project-complete]");
+      if (!button || !courseId || !projectId) {
+        return;
+      }
+
+      updateProjectButton();
+      button.addEventListener("click", () => {
+        const state = courseState(courseId, true);
+        state.capstone_status =
+          state.capstone_status === "complete" ? "not_started" : "complete";
+        state.updated_at = new Date().toISOString();
+        syncCourseCompletionState();
+        writeJson(progressKey, progress);
+        paintSidebarCompletion();
+        updateProjectButton();
+      });
+    }
+
+    function rememberCurrentLesson() {
+      if (!isTrackable) {
+        return;
+      }
+
+      const saved = readJson(lastLessonKey, {
+        schema_version: 6,
+        global: null,
+        courses: {},
+      });
+      const lesson = {
+        key: currentKey,
+        course_id: courseId,
+        lesson_id: lessonId,
+        title:
+          document.querySelector("h1.title")?.textContent.trim() ||
+          document.title,
+      };
+      saved.schema_version = 6;
+      saved.global = lesson;
+      saved.courses = saved.courses || {};
+      saved.courses[courseId] = lesson;
+      writeJson(lastLessonKey, saved);
+    }
+
+    function setupResumePanel() {
+      const panel = document.querySelector("[data-fc-resume]");
+      const saved = readJson(lastLessonKey, null);
+      const lastLesson = saved?.global;
+      if (!panel || !lastLesson?.key) {
+        return;
+      }
+
+      panel.querySelector("[data-fc-resume-title]").textContent =
+        lastLesson.title;
+      panel.querySelector("[data-fc-resume-link]").href = hrefForKey(
+        lastLesson.key,
+      );
+      panel.hidden = false;
+    }
+
+    function setupCourseResumeLinks() {
+      document.querySelectorAll("[data-fc-course-resume]").forEach((link) => {
+        const id = link.dataset.fcCourseResume;
+        const activities = courseActivityLinks(id);
+        const started = activities.some((activity) =>
+          courseActivityIsComplete(id, pageKey(activity.href)),
+        );
+        if (!started) {
+          return;
+        }
+
+        const next = activities.find(
+          (activity) => !courseActivityIsComplete(id, pageKey(activity.href)),
+        );
+        if (!next) {
+          link.textContent = "Review course";
+          return;
+        }
+
+        link.href = next.href;
+        link.textContent = "Continue course";
+      });
+    }
+
+    function setupCourseOverview() {
+      const root = document.querySelector("[data-fc-course-overview]");
+      if (!root) {
+        return;
+      }
+
+      const id = root.dataset.courseId;
+      const snapshot = completionSnapshot(root, id);
+      const percent = snapshot.total
+        ? Math.round((snapshot.completed / snapshot.total) * 100)
+        : 0;
+      const track = root.querySelector("[data-fc-course-progress-track]");
+
+      root.querySelector(
+        "[data-fc-course-progress-value]",
+      ).textContent = `${percent}%`;
+      root.querySelector("[data-fc-course-progress-label]").textContent =
+        snapshot.structured
+          ? snapshot.completed === snapshot.total
+            ? `All ${snapshot.total} course activities recorded`
+            : `${snapshot.total - snapshot.completed} of ${
+                snapshot.total
+              } course activities remaining`
+          : `${snapshot.completed} of ${snapshot.total} lessons complete`;
+      root.querySelector(
+        "[data-fc-course-progress-bar]",
+      ).style.width = `${percent}%`;
+      track?.setAttribute("aria-valuenow", String(percent));
+
+      const lessons = root.querySelector("[data-fc-course-lessons]");
+      const challenges = root.querySelector("[data-fc-course-challenges]");
+      const project = root.querySelector("[data-fc-course-project]");
+      const status = root.querySelector("[data-fc-course-completion-status]");
+      if (lessons) {
+        lessons.textContent = `${snapshot.lessonCompleted}/${snapshot.lessonTotal}`;
+      }
+      if (challenges) {
+        challenges.textContent = `${snapshot.challengeCompleted}/${snapshot.challengeTotal}`;
+      }
+      if (project) {
+        project.textContent = snapshot.projectCompleted
+          ? "Recorded"
+          : "Not recorded";
+      }
+      if (status) {
+        const complete =
+          snapshot.completed === snapshot.total && snapshot.total > 0;
+        status.textContent = complete
+          ? "Locally complete · self-reported"
+          : "Course in progress";
+        status.classList.toggle("is-complete", complete);
+      }
+    }
+
+    function setupCatalog() {
+      const catalog = document.querySelector("[data-fc-catalog]");
+      if (!catalog) {
+        return;
+      }
+
+      const search = document.querySelector("[data-fc-catalog-search]");
+      const buttons = [...document.querySelectorAll("[data-fc-course-filter]")];
+      const cards = [...catalog.querySelectorAll("[data-fc-course-card]")];
+      const count = document.querySelector("[data-fc-catalog-count]");
+      const empty = document.querySelector("[data-fc-catalog-empty]");
+      let filter = "all";
+
+      cards.forEach((card) => {
+        const id = card.dataset.courseId;
+        const snapshot = completionSnapshot(card, id);
+        const curriculumTbd =
+          card.dataset.courseStatus === "in-development" &&
+          snapshot.total === 0;
+        const percent = snapshot.total
+          ? Math.round((snapshot.completed / snapshot.total) * 100)
+          : 0;
+        const bar = card.querySelector("[data-fc-card-progress-bar]");
+        const value = card.querySelector("[data-fc-card-progress-value]");
+        bar?.parentElement?.toggleAttribute("hidden", curriculumTbd);
+        if (bar) {
+          bar.style.width = `${percent}%`;
+        }
+        if (value) {
+          value.textContent = curriculumTbd
+            ? "Curriculum TBD"
+            : snapshot.structured
+            ? `${snapshot.completed}/${snapshot.total} activities`
+            : `${snapshot.completed}/${snapshot.total} complete`;
+        }
+      });
+
+      const applyFilters = () => {
+        const query = search?.value.trim().toLowerCase() || "";
+        let visible = 0;
+
+        cards.forEach((card) => {
+          const matchesText =
+            !query ||
+            `${card.textContent} ${card.dataset.courseKeywords || ""}`
+              .toLowerCase()
+              .includes(query);
+          const pathways = (card.dataset.coursePathway || "").split(/\s+/);
+          const status = card.dataset.courseStatus;
+          const matchesFilter =
+            filter === "all" ||
+            (filter === "available" && status === "available") ||
+            (filter !== "available" &&
+              (pathways.includes(filter) || pathways.includes("both")));
+          const show = matchesText && matchesFilter;
+          card.hidden = !show;
+          if (show) {
+            visible += 1;
+          }
+        });
+
+        if (count) {
+          count.textContent = `${visible} ${
+            visible === 1 ? "course" : "courses"
+          }`;
+        }
+        if (empty) {
+          empty.hidden = visible !== 0;
+        }
+      };
+
+      search?.addEventListener("input", applyFilters);
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          filter = button.dataset.fcCourseFilter;
+          buttons.forEach((item) => {
+            const selected = item === button;
+            item.classList.toggle("is-active", selected);
+            item.setAttribute("aria-pressed", String(selected));
+          });
+          applyFilters();
+        });
+      });
+
+      applyFilters();
+    }
+
+    function setupFaqSearch() {
+      const search = document.querySelector("[data-fc-faq-search]");
+      const cards = [...document.querySelectorAll(".faq-hub .course-card")];
+      const count = document.querySelector("[data-fc-faq-count]");
+      const empty = document.querySelector("[data-fc-faq-empty]");
+      if (!search || !cards.length) {
+        return;
+      }
+
+      const applySearch = () => {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
+        cards.forEach((card) => {
+          const show = !query || card.textContent.toLowerCase().includes(query);
+          card.hidden = !show;
+          if (show) {
+            visible += 1;
+          }
+        });
+        if (count) {
+          count.textContent = `${visible} ${
+            visible === 1 ? "answer" : "answers"
+          }`;
+        }
+        if (empty) {
+          empty.hidden = visible !== 0;
+        }
+      };
+
+      search.addEventListener("input", applySearch);
+      applySearch();
+    }
+
+    function restoreNavigationState() {
+      const navbarLinks = [
+        ...document.querySelectorAll(
+          ".navbar-nav a.nav-link[href], .navbar-nav a.dropdown-item[href]",
+        ),
+      ];
+      const targetKey = isFaq ? "resources/faq" : courseHome;
+      if (!targetKey) {
+        return;
+      }
+
+      const target = navbarLinks.find(
+        (link) => pageKey(link.href) === targetKey,
+      );
+      target?.classList.add("active");
+      target?.setAttribute("aria-current", "page");
+      target
+        ?.closest(".nav-item.dropdown")
+        ?.querySelector(".dropdown-toggle")
+        ?.classList.add("active");
+    }
+
+    if (syncCourseCompletionState()) {
+      writeJson(progressKey, progress);
+    }
+    if (isTrackable) {
+      document.body.classList.add("fc-lesson-page");
+    }
+    if (challengeId || projectId) {
+      document.body.classList.add("fc-assessment-page");
+    }
+    markSameOriginLinksInternal();
+    enrichTitle();
+    restoreNavigationState();
+    paintSidebarCompletion();
+    updateProgressHeader();
+    setupCompletionButton();
+    setupChallengeButton();
+    setupProjectButton();
+    rememberCurrentLesson();
+    setupResumePanel();
+    setupCourseResumeLinks();
+    setupCourseOverview();
+    setupCatalog();
+    setupFaqSearch();
+  })();
+</script>
