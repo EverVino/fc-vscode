@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Explore our beginner-friendly VS Code units.">
+<meta name="description" content="A concise overview of Visual Studio Code (VSCode) and its widespread adoption among developers.">
 
-<title>VSCode Units – FreeCampus VSCode</title>
+<title>Why VSCode – FreeCampus VSCode</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,8 +35,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../assets/freecampus-mark.svg" rel="icon" type="image/svg+xml">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -78,66 +76,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-unit-catalog .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-description','listing-unit_order','listing-unit_level','listing-estimated_time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
-      
-      searchColumns: ["listing-project","listing-website","listing-format","listing-execute","listing-engines","listing-language","listing-title","listing-description","listing-unit_order","listing-unit_level","listing-estimated_time","listing-unit_id","listing-body-classes","listing-path","listing-outputHref","listing-author","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-unit-catalog'] = new List('listing-unit-catalog', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="../components/learning-shell.css">
@@ -147,7 +87,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../components/responsive.css">
 </head>
 
-<body class="nav-fixed course-hub portfolio-hub quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed course-home course-foundations quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -371,15 +311,27 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link active" data-scroll-target="#before-you-start">Before you start</a></li>
+  <li><a href="#what-you-will-be-able-to-do" id="toc-what-you-will-be-able-to-do" class="nav-link" data-scroll-target="#what-you-will-be-able-to-do">What you will be able to do</a></li>
+  <li><a href="#learning-sequence" id="toc-learning-sequence" class="nav-link" data-scroll-target="#learning-sequence">Learning sequence</a></li>
+  <li><a href="#assessment-and-progress" id="toc-assessment-and-progress" class="nav-link" data-scroll-target="#assessment-and-progress">Assessment and progress</a></li>
+  <li><a href="#start-learning" id="toc-start-learning" class="nav-link" data-scroll-target="#start-learning">Start learning</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/freecampus/vscode/edit/main/vscode/00-overview.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/freecampus/vscode/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default fc-learning-header">
+<header id="title-block-header" class="quarto-title-block default fc-learning-header" data-fc-unit-id="installation">
   <div class="fc-title-context" aria-live="polite">
     <span class="fc-title-context-label" data-fc-context="">FreeCampus VS Code</span>
     <span class="fc-title-position" data-fc-position=""></span>
@@ -387,8 +339,8 @@ window.Quarto = {
 
   <div class="fc-title-layout">
     <div class="fc-title-copy">
-            <h1 class="title">VSCode Units</h1>
-             <div class="description">Explore our beginner-friendly VS Code units.</div>
+            <h1 class="title">Why VSCode</h1>
+             <div class="description">A concise overview of Visual Studio Code (VSCode) and its widespread adoption among developers.</div>
       
 
       <div class="fc-title-chips" data-fc-title-chips="">
@@ -409,7 +361,7 @@ window.Quarto = {
   </div>
 
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta">
 
       
     
@@ -419,127 +371,201 @@ window.Quarto = {
 </header>
 
 
-<section id="choose-your-next-skill" class="level2">
-<h2 class="anchored" data-anchor-id="choose-your-next-skill">Choose your next skill</h2>
-<p>Start with <strong>Setting up VS Code</strong> if programming is new to you. If you already know VS Code, got for the one you matches you.</p>
-
+<div class="lesson-meta">
+<ul>
+<li><strong>Level:</strong> Beginner to project-ready</li>
+<li><strong>Estimated effort:</strong> 380–540 hours</li>
+<li><strong>Prerequisite:</strong> None</li>
+<li><strong>Status:</strong> Available; final project and certificate planned</li>
+</ul>
+</div>
+<div class="fc-course-intro">
+<div class="callout callout-style-default callout-tip callout-titled" title="Start here if programming is new to you">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Start here if programming is new to you
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This course assumes no programming experience. Begin with the learning method, then progress through one connected sequence. Every published lesson and challenge belongs to that sequence.</p>
+</div>
+</div>
+<div class="fc-course-overview fc-completion-overview" data-fc-course-overview="" data-course-id="instalation" data-course-total="97">
+  <div><strong data-fc-course-progress-value="">0%</strong><span>course work recorded</span></div>
+  <div class="fc-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-fc-course-progress-track="">
+    <span data-fc-course-progress-bar=""></span>
+  </div>
+  <div class="fc-requirement-grid">
+    <div><strong data-fc-course-lessons="">0/97</strong><span>lessons</span></div>
+    <div><strong data-fc-course-challenges="">0/16</strong><span>unit challenges</span></div>
+  </div>
+  <span data-fc-course-progress-label="">113 course activities remaining</span>
+  <strong class="fc-completion-status" data-fc-course-completion-status="">Course in progress</strong>
+</div>
+</div>
+<section id="before-you-start" class="level2">
+<h2 class="anchored" data-anchor-id="before-you-start">Before you start</h2>
+<ul>
+<li><strong>Designed for:</strong> learners with little or no programming experience.</li>
+<li><strong>You are ready when:</strong> you can use a browser and are willing to predict, run, explain, modify, quiz, and debug small examples. No mathematics prerequisite is assumed.</li>
+<li><strong>Practice setup:</strong> begin with generated Colab notebooks. Unit 0 compares notebook and local workflows before later units introduce full projects.</li>
+<li><strong>Assessment:</strong> lesson checkpoints diagnose understanding; each unit challenge asks you to integrate its ideas with assertions, hints, and debugging evidence.</li>
+</ul>
+</section>
+<section id="what-you-will-be-able-to-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-you-will-be-able-to-do">What you will be able to do</h2>
+<ul>
+<li>read Python syntax and trace values, state, decisions, loops, calls, and object relationships;</li>
+<li>choose representations for numbers, text, time, collections, files, and external records;</li>
+<li>turn requirements into small algorithms, functions, modules, packages, and classes;</li>
+<li>diagnose failures from tracebacks and controlled experiments;</li>
+<li>build a reproducible Git-backed project with a CLI and layered tests;</li>
+<li>improve behavior safely with typing, formatting, linting, quality gates, and refactoring; and</li>
+<li>guide readers with verified README, task, explanation, API, executable-example, Quarto, and publishing documentation.</li>
+</ul>
+</section>
+<section id="learning-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="learning-sequence">Learning sequence</h2>
+<p>Python Foundations curriculum version 21 contains <strong>16 units</strong> and <strong>97 cohesive lessons</strong>. Each unit begins with an Overview and ends with a challenge.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Unit</th>
+<th>Focus</th>
+<th>Outcome</th>
+<th>Apply it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td><a href="units/get-started/index.qmd">Get Started</a></td>
+<td>Run and explain a small Python program, keep trustworthy evidence in a clean notebook, choose a suitable practice environment, diagnose common first-run problems, and use AI assistance without surrendering prediction or verification.</td>
+<td><a href="units/get-started/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td><a href="units/python-syntax/index.qmd">Learning to Read and Write Python Code</a></td>
+<td>Read a short program, trace how Python interprets it, format its structure clearly, document its decisions, and repair syntax errors systematically.</td>
+<td><a href="units/python-syntax/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td><a href="units/core-values-types/index.qmd">Numbers, Text, and Other Values</a></td>
+<td>Choose suitable Python values for counts, measurements, money, text, truth, missing information, and time; convert and format them deliberately; and explain important precision, parsing, and comparison boundaries.</td>
+<td><a href="units/core-values-types/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td><a href="units/collections-iteration/index.qmd">Organizing and Traversing Collections</a></td>
+<td>Choose among lists, tuples, dictionaries, and sets from order, mutability, lookup, uniqueness, and data shape; traverse them safely; and sort or combine them without losing relationships.</td>
+<td><a href="units/collections-iteration/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td><a href="units/decisions-repetition/index.qmd">Making Decisions and Repeating Work</a></td>
+<td>Turn written rules into complete, non-overlapping branches; use loops to transform, search, and traverse data; and explain how each loop progresses and stops.</td>
+<td><a href="units/decisions-repetition/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td><a href="units/functions-call-behavior/index.qmd">Building Reusable Functions</a></td>
+<td>Design, call, compose, and trace reusable functions with clear parameters, returned results, documented contracts, and controlled side effects; pass behavior as data; and explain how recursive, lazy, closure-based, and decorated calls progress and finish.</td>
+<td><a href="units/functions-call-behavior/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td><a href="units/mutability-identity-copying/index.qmd">Sharing, Changing, and Copying Objects</a></td>
+<td>Trace which names and containers share objects; distinguish equality, identity, rebinding, mutation, immutability, and hashability; choose shallow, selective, or deep copying from an explicit ownership contract; and design functions whose mutations or returned copies are deliberate and observable.</td>
+<td><a href="units/mutability-identity-copying/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td><a href="units/problem-solving-algorithms/index.qmd">Solving Problems with Algorithms</a></td>
+<td>Turn an unclear task into explicit examples and rules; decompose it into checkable functions; select, trace, and adapt common algorithms; and defend correctness, boundary behavior, and practical time and memory costs.</td>
+<td><a href="units/problem-solving-algorithms/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td><a href="units/errors-exceptions-debugging/index.qmd">Errors, Exceptions, and Debugging</a></td>
+<td>Classify syntax failures, runtime exceptions, and wrong results; read tracebacks across function calls; raise and handle only anticipated exceptions with useful context; and reproduce, inspect, isolate, repair, and verify a bug one evidence-backed hypothesis at a time.</td>
+<td><a href="units/errors-exceptions-debugging/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td><a href="units/files-paths-external-data/index.qmd">Files, Paths, and External Data</a></td>
+<td>Locate files predictably, preserve text, translate external formats, validate records, and produce reproducible outputs with rejection evidence.</td>
+<td><a href="units/files-paths-external-data/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td><a href="units/modules-environments-projects/index.qmd">Modules, Environments, and Python Projects</a></td>
+<td>Discover reusable tools, design modules and package interfaces, version a <code>src</code> project, isolate dependencies, and prove a built wheel works outside its repository.</td>
+<td><a href="units/modules-environments-projects/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td><a href="units/object-oriented-python/index.qmd">Object-Oriented Python and Dataclasses</a></td>
+<td>Choose between functions, collections, dataclasses, and stateful classes; preserve valid state; compose replaceable collaborators; and reserve inheritance for honest behavioral subtypes.</td>
+<td><a href="units/object-oriented-python/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td><a href="units/command-line-applications/index.qmd">Command-Line Applications</a></td>
+<td>Design a discoverable command, keep data and diagnostics in their proper channels, resolve settings safely, and connect a thin CLI adapter to reusable Python that can be checked directly and as a real process.</td>
+<td><a href="units/command-line-applications/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td><a href="units/testing-python-programs/index.qmd">Testing Python Programs</a></td>
+<td>Turn behavioral contracts into focused pytest suites, interpret failures, isolate state and dependencies, choose evidence-producing boundaries, preserve regressions, and use generated examples without confusing passing tests or coverage with proof.</td>
+<td><a href="units/testing-python-programs/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td><a href="units/code-quality-maintainability/index.qmd">Code Quality and Maintainability</a></td>
+<td>Make Python projects easier to read and safer to change with consistent code, useful types, automated local/CI checks, and small behavior-preserving refactors.</td>
+<td><a href="units/code-quality-maintainability/challenge.qmd">Challenge</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td><a href="units/documentation-publishing/index.qmd">Documentation as Part of the Product</a></td>
+<td>Design, write, test, build, and publish documentation that guides real readers from first contact to successful use, explains a stable public Python API, and remains trustworthy as the code changes.</td>
+<td><a href="units/documentation-publishing/challenge.qmd">Challenge</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="assessment-and-progress" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-and-progress">Assessment and progress</h2>
+<p>Treat each lesson as a lab: predict, run, explain, modify, quiz, and debug. A unit challenge then asks you to select and combine ideas rather than repeat a lesson example. Unit 0 concludes with a methodology and setup quiz. The other challenges are designed for 60–120 minutes and provide a public contract, progressive checks, three hint levels, and a debugging-evidence record.</p>
+<p>The progress dashboard is private, self-reported browser storage. It does not submit work, grade artifacts, verify identity, or issue credentials.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Final project and certificate are coming later">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Final project and certificate are coming later
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A Python Foundations final project and certificate are planned. Requirements, availability, and participation details will be announced soon.</p>
+</div>
+</div>
+</section>
+<section id="start-learning" class="level2">
+<h2 class="anchored" data-anchor-id="start-learning">Start learning</h2>
+<p>Begin with the learning method, then move through the units in order. Return to earlier evidence whenever a later task exposes a gap.</p>
+<p><a href="units/get-started/index.qmd" class="btn btn-primary" data-fc-course-resume="python-foundations">Start Unit 0</a> <a href="../../pathways/index.qmd" class="btn btn-outline-primary">Review the full pathway</a></p>
 
 
 </section>
 
-<div class="quarto-listing quarto-listing-container-custom" id="listing-unit-catalog">
-<div class="list">
-<article class="fc-catalog-card fc-portfolio-card">
-  <a class="fc-catalog-card-link" href="../vscode/00-overview.html">
-    <div class="fc-catalog-card-topline">
-      <span class="fc-catalog-number">
-        00
-      </span>
-
-      <span class="fc-catalog-stage">
-        Beginner
-      </span>
-    </div>
-
-    <h3 class="anchored">Why VSCode</h3>
-
-    <div class="fc-catalog-description">
-      A concise overview of Visual Studio Code (VSCode) and its widespread adoption among developers.
-    </div>
-
-    <dl class="fc-unit-facts">
-      <div>
-        <dt>Level</dt>
-        <dd>Beginner</dd>
-      </div>
-      <div>
-        <dt>Time</dt>
-        <dd>15 min</dd>
-      </div>
-    </dl>
-
-    <div class="fc-catalog-card-footer">
-      <span class="fc-catalog-open">
-        View unit <span aria-hidden="true">→</span>
-      </span>
-    </div>
-  </a>
-</article>
-<article class="fc-catalog-card fc-portfolio-card">
-  <a class="fc-catalog-card-link" href="../vscode/01-installation.html">
-    <div class="fc-catalog-card-topline">
-      <span class="fc-catalog-number">
-        01
-      </span>
-
-      <span class="fc-catalog-stage">
-        Beginner
-      </span>
-    </div>
-
-    <h3 class="anchored">Installing VS Code</h3>
-
-    <div class="fc-catalog-description">
-      Learn how to download and install VS Code on your computer.
-    </div>
-
-    <dl class="fc-unit-facts">
-      <div>
-        <dt>Level</dt>
-        <dd>Beginner</dd>
-      </div>
-      <div>
-        <dt>Time</dt>
-        <dd>15 min</dd>
-      </div>
-    </dl>
-
-    <div class="fc-catalog-card-footer">
-      <span class="fc-catalog-open">
-        View unit <span aria-hidden="true">→</span>
-      </span>
-    </div>
-  </a>
-</article>
-<article class="fc-catalog-card fc-portfolio-card">
-  <a class="fc-catalog-card-link" href="../vscode/02-environment.html">
-    <div class="fc-catalog-card-topline">
-      <span class="fc-catalog-number">
-        02
-      </span>
-
-      <span class="fc-catalog-stage">
-        Beginner
-      </span>
-    </div>
-
-    <h3 class="anchored">Getting started</h3>
-
-    <div class="fc-catalog-description">
-      Get familiar with the main components of VS Code.
-    </div>
-
-    <dl class="fc-unit-facts">
-      <div>
-        <dt>Level</dt>
-        <dd>Beginner</dd>
-      </div>
-      <div>
-        <dt>Time</dt>
-        <dd>20 min</dd>
-      </div>
-    </dl>
-
-    <div class="fc-catalog-card-footer">
-      <span class="fc-catalog-open">
-        View unit <span aria-hidden="true">→</span>
-      </span>
-    </div>
-  </a>
-</article>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script>
   (() => {
     "use strict";
@@ -1811,7 +1837,7 @@ window.Quarto = {
 </div>   
     <div class="nav-footer-center">
 <p>Course content updated 26 September 2026</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/freecampus/vscode/edit/main/vscode/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/freecampus/vscode/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/freecampus/vscode/edit/main/vscode/00-overview.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/freecampus/vscode/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">

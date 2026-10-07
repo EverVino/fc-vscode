@@ -25,7 +25,7 @@ efficiently with the most popular code editor.
 
 ::: {.hero-actions}
 [Start with VsCode](){.btn .btn-primary .btn-lg}
-[Explore all units](courses/index.qmd){.btn .btn-outline-primary .btn-lg}
+[Explore all units](vscode/index.qmd){.btn .btn-outline-primary .btn-lg}
 :::
 
 ::: {.hero-stats}
@@ -54,6 +54,14 @@ Independent units
 :::
 :::
 
+## How every unit works
+
+::: {.learning-loop}
+1. **Read** the unit.
+2. **Try it** locally.
+3. **Apply it** to your own projects.
+:::
+
 ::: {.course-grid .audience-grid}
 
 ::: {.course-card}
@@ -63,15 +71,6 @@ Visit the official documentation page [Visual Studio Code documentation](https:/
 :::
 
 :::
-
-## How every unit works
-
-::: {.learning-loop}
-1. **Read** the unit.
-2. **Try it** locally.
-3. **Apply it** to your own projects.
-:::
-
 
 ## Shared help
 

@@ -1,24 +1,52 @@
 [
   {
-    "objectID": "vscode/02-environment.html",
-    "href": "vscode/02-environment.html",
-    "title": "Getting started",
+    "objectID": "vscode/00-overview.html",
+    "href": "vscode/00-overview.html",
+    "title": "Why VSCode",
     "section": "",
-    "text": "Getting started\n\n\n\n\n Back to top"
+    "text": "Level: Beginner to project-ready\nEstimated effort: 380–540 hours\nPrerequisite: None\nStatus: Available; final project and certificate planned"
   },
   {
-    "objectID": "vscode/index.html",
-    "href": "vscode/index.html",
-    "title": "VSCode Units",
-    "section": "",
-    "text": "Start with Setting up VS Code if programming is new to you. If you already know VS Code, got for the one you matches you.\n\n\n\n\n\n\n\n\n\nNoteCourse status and certificates\n\n\n\nTODO : Add a notes about the content or estimated time browser completion is not a verified credential.\n\n\nCompare prerequisites and pathways"
+    "objectID": "vscode/00-overview.html#before-you-start",
+    "href": "vscode/00-overview.html#before-you-start",
+    "title": "Why VSCode",
+    "section": "Before you start",
+    "text": "Before you start\n\nDesigned for: learners with little or no programming experience.\nYou are ready when: you can use a browser and are willing to predict, run, explain, modify, quiz, and debug small examples. No mathematics prerequisite is assumed.\nPractice setup: begin with generated Colab notebooks. Unit 0 compares notebook and local workflows before later units introduce full projects.\nAssessment: lesson checkpoints diagnose understanding; each unit challenge asks you to integrate its ideas with assertions, hints, and debugging evidence."
   },
   {
-    "objectID": "vscode/index.html#choose-your-next-skill",
-    "href": "vscode/index.html#choose-your-next-skill",
-    "title": "VSCode Units",
+    "objectID": "vscode/00-overview.html#what-you-will-be-able-to-do",
+    "href": "vscode/00-overview.html#what-you-will-be-able-to-do",
+    "title": "Why VSCode",
+    "section": "What you will be able to do",
+    "text": "What you will be able to do\n\nread Python syntax and trace values, state, decisions, loops, calls, and object relationships;\nchoose representations for numbers, text, time, collections, files, and external records;\nturn requirements into small algorithms, functions, modules, packages, and classes;\ndiagnose failures from tracebacks and controlled experiments;\nbuild a reproducible Git-backed project with a CLI and layered tests;\nimprove behavior safely with typing, formatting, linting, quality gates, and refactoring; and\nguide readers with verified README, task, explanation, API, executable-example, Quarto, and publishing documentation."
+  },
+  {
+    "objectID": "vscode/00-overview.html#learning-sequence",
+    "href": "vscode/00-overview.html#learning-sequence",
+    "title": "Why VSCode",
+    "section": "Learning sequence",
+    "text": "Learning sequence\nPython Foundations curriculum version 21 contains 16 units and 97 cohesive lessons. Each unit begins with an Overview and ends with a challenge.\n\n\n\nUnit\nFocus\nOutcome\nApply it\n\n\n\n\n0\nGet Started\nRun and explain a small Python program, keep trustworthy evidence in a clean notebook, choose a suitable practice environment, diagnose common first-run problems, and use AI assistance without surrendering prediction or verification.\nChallenge\n\n\n1\nLearning to Read and Write Python Code\nRead a short program, trace how Python interprets it, format its structure clearly, document its decisions, and repair syntax errors systematically.\nChallenge\n\n\n2\nNumbers, Text, and Other Values\nChoose suitable Python values for counts, measurements, money, text, truth, missing information, and time; convert and format them deliberately; and explain important precision, parsing, and comparison boundaries.\nChallenge\n\n\n3\nOrganizing and Traversing Collections\nChoose among lists, tuples, dictionaries, and sets from order, mutability, lookup, uniqueness, and data shape; traverse them safely; and sort or combine them without losing relationships.\nChallenge\n\n\n4\nMaking Decisions and Repeating Work\nTurn written rules into complete, non-overlapping branches; use loops to transform, search, and traverse data; and explain how each loop progresses and stops.\nChallenge\n\n\n5\nBuilding Reusable Functions\nDesign, call, compose, and trace reusable functions with clear parameters, returned results, documented contracts, and controlled side effects; pass behavior as data; and explain how recursive, lazy, closure-based, and decorated calls progress and finish.\nChallenge\n\n\n6\nSharing, Changing, and Copying Objects\nTrace which names and containers share objects; distinguish equality, identity, rebinding, mutation, immutability, and hashability; choose shallow, selective, or deep copying from an explicit ownership contract; and design functions whose mutations or returned copies are deliberate and observable.\nChallenge\n\n\n7\nSolving Problems with Algorithms\nTurn an unclear task into explicit examples and rules; decompose it into checkable functions; select, trace, and adapt common algorithms; and defend correctness, boundary behavior, and practical time and memory costs.\nChallenge\n\n\n8\nErrors, Exceptions, and Debugging\nClassify syntax failures, runtime exceptions, and wrong results; read tracebacks across function calls; raise and handle only anticipated exceptions with useful context; and reproduce, inspect, isolate, repair, and verify a bug one evidence-backed hypothesis at a time.\nChallenge\n\n\n9\nFiles, Paths, and External Data\nLocate files predictably, preserve text, translate external formats, validate records, and produce reproducible outputs with rejection evidence.\nChallenge\n\n\n10\nModules, Environments, and Python Projects\nDiscover reusable tools, design modules and package interfaces, version a src project, isolate dependencies, and prove a built wheel works outside its repository.\nChallenge\n\n\n11\nObject-Oriented Python and Dataclasses\nChoose between functions, collections, dataclasses, and stateful classes; preserve valid state; compose replaceable collaborators; and reserve inheritance for honest behavioral subtypes.\nChallenge\n\n\n12\nCommand-Line Applications\nDesign a discoverable command, keep data and diagnostics in their proper channels, resolve settings safely, and connect a thin CLI adapter to reusable Python that can be checked directly and as a real process.\nChallenge\n\n\n13\nTesting Python Programs\nTurn behavioral contracts into focused pytest suites, interpret failures, isolate state and dependencies, choose evidence-producing boundaries, preserve regressions, and use generated examples without confusing passing tests or coverage with proof.\nChallenge\n\n\n14\nCode Quality and Maintainability\nMake Python projects easier to read and safer to change with consistent code, useful types, automated local/CI checks, and small behavior-preserving refactors.\nChallenge\n\n\n15\nDocumentation as Part of the Product\nDesign, write, test, build, and publish documentation that guides real readers from first contact to successful use, explains a stable public Python API, and remains trustworthy as the code changes.\nChallenge"
+  },
+  {
+    "objectID": "vscode/00-overview.html#assessment-and-progress",
+    "href": "vscode/00-overview.html#assessment-and-progress",
+    "title": "Why VSCode",
+    "section": "Assessment and progress",
+    "text": "Assessment and progress\nTreat each lesson as a lab: predict, run, explain, modify, quiz, and debug. A unit challenge then asks you to select and combine ideas rather than repeat a lesson example. Unit 0 concludes with a methodology and setup quiz. The other challenges are designed for 60–120 minutes and provide a public contract, progressive checks, three hint levels, and a debugging-evidence record.\nThe progress dashboard is private, self-reported browser storage. It does not submit work, grade artifacts, verify identity, or issue credentials.\n\n\n\n\n\n\nImportantFinal project and certificate are coming later\n\n\n\nA Python Foundations final project and certificate are planned. Requirements, availability, and participation details will be announced soon."
+  },
+  {
+    "objectID": "vscode/00-overview.html#start-learning",
+    "href": "vscode/00-overview.html#start-learning",
+    "title": "Why VSCode",
+    "section": "Start learning",
+    "text": "Start learning\nBegin with the learning method, then move through the units in order. Return to earlier evidence whenever a later task exposes a gap.\nStart Unit 0 Review the full pathway"
+  },
+  {
+    "objectID": "vscode/01-installation.html",
+    "href": "vscode/01-installation.html",
+    "title": "Installing VS Code",
     "section": "",
-    "text": "Start with Setting up VS Code if programming is new to you. If you already know VS Code, got for the one you matches you.\n\n\n\n\n\n\n\n\n\nNoteCourse status and certificates\n\n\n\nTODO : Add a notes about the content or estimated time browser completion is not a verified credential.\n\n\nCompare prerequisites and pathways"
+    "text": "Level: Beginner to project-ready\nEstimated effort: 380–540 hours\nPrerequisite: None\nStatus: Available; final project and certificate planned\n\n\n\nInstalling VSCode\n\n\n\n\n Back to top"
   },
   {
     "objectID": "index.html",
@@ -32,7 +60,7 @@
     "href": "index.html#how-every-unit-works",
     "title": "FreeCampus VS Code",
     "section": "How every unit works",
-    "text": "How every unit works\n\n\nRead the unit.\nTry it locally.\nApply it to your own projects."
+    "text": "How every unit works\n\n\nRead the unit.\nTry it locally.\nApply it to your own projects.\n\n\n\n\nWant to learn more?\nVisit the official documentation page Visual Studio Code documentation"
   },
   {
     "objectID": "index.html#shared-help",
@@ -42,10 +70,24 @@
     "text": "Shared help\n\nUse the VS Code FAQ when an error or output surprises you.\nOpen the full course catalog whenever you want to switch pathways."
   },
   {
-    "objectID": "vscode/01-installation.html",
-    "href": "vscode/01-installation.html",
-    "title": "Installing VS Code",
+    "objectID": "vscode/index.html",
+    "href": "vscode/index.html",
+    "title": "VSCode Units",
     "section": "",
-    "text": "Installing VSCode\n\n\n\n\n Back to top"
+    "text": "Start with Setting up VS Code if programming is new to you. If you already know VS Code, got for the one you matches you."
+  },
+  {
+    "objectID": "vscode/index.html#choose-your-next-skill",
+    "href": "vscode/index.html#choose-your-next-skill",
+    "title": "VSCode Units",
+    "section": "",
+    "text": "Start with Setting up VS Code if programming is new to you. If you already know VS Code, got for the one you matches you."
+  },
+  {
+    "objectID": "vscode/02-environment.html",
+    "href": "vscode/02-environment.html",
+    "title": "Getting started",
+    "section": "",
+    "text": "Getting started\n\n\n\n\n Back to top"
   }
 ]

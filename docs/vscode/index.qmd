@@ -9,7 +9,9 @@ body-classes: "course-hub portfolio-hub"
 listing:
   - id: unit-catalog
     contents:
-      - statistics-python/index.qmd
+      - 00-overview.qmd
+      - 01-installation.qmd
+      - 02-environment.qmd
     sort: "unit_order"
     template: _listings/unit-card.ejs.md
     fields:
@@ -26,13 +28,3 @@ listing:
 
 Start with **Setting up VS Code** if programming is new to you. If you already
 know VS Code, got for the one you matches you.
-
-::: {#course-catalog .fc-course-catalog data-fc-catalog=""}
-:::
-
-::: {.callout-note title="Course status and certificates"}
-TODO : Add a notes about the content or estimated time 
-browser completion is not a verified credential.
-:::
-
-[Compare prerequisites and pathways](../pathways/index.qmd){.btn .btn-outline-primary}

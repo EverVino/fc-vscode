@@ -4,6 +4,14 @@ description: Learn how to download and install VS Code on your computer.
 unit_order: 1
 unit_level: Beginner
 estimated_time: "15 min"
+unit_id: instalation
 ---
+
+::: {.lesson-meta}
+- **Level:** Beginner to project-ready
+- **Estimated effort:** 380–540 hours
+- **Prerequisite:** None
+- **Status:** Available; final project and certificate planned
+:::
 
 # Installing VSCode

@@ -22,7 +22,7 @@
       <%= item.description %>
     </div>
 
-    <dl class="fc-unit-facts">
+    <dl class="fc-course-facts">
       <div>
         <dt>Level</dt>
         <dd><%= item.unit_level %></dd>

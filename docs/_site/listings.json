@@ -1,6 +1,10 @@
 [
   {
     "listing": "/vscode/index.html",
-    "items": []
+    "items": [
+      "/vscode/00-overview.html",
+      "/vscode/01-installation.html",
+      "/vscode/02-environment.html"
+    ]
   }
 ]
