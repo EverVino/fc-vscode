@@ -15,6 +15,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "eslint": "^10.12.0",
     "prettier": "^3.9.9",

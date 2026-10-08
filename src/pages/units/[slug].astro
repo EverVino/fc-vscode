@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import UnitSidebar from "../../components/UnitSidebar.astro";
+
+export async function getStaticPaths() {
+  const units = await getCollection("units");
+
+  return units.map((unit) => ({
+    params: { slug: unit.id },
+    props: {
+      unit,
+      units,
+    },
+  }));
+}
+
+const { unit, units } = Astro.props;
+const { Content } = await render(unit);
+---
+
+<BaseLayout>
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-8 lg:flex-row">
+      <UnitSidebar
+        units={units}
+        currentUnitId={unit.id}
+      />
+
+      <main class="min-w-0 flex-1">
+        <header class="mb-8 border-b border-slate-200 pb-6">
+          <p class="text-sm font-semibold text-indigo-600">
+            Unit {unit.data.unit_order}
+          </p>
+
+          <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+            {unit.data.title}
+          </h1>
+
+          <p class="mt-4 text-lg text-slate-600">
+            {unit.data.description}
+          </p>
+        </header>
+
+        <article class="prose prose-slate max-w-none">
+          <Content />
+        </article>
+      </main>
+    </div>
+  </div>
+</BaseLayout>
