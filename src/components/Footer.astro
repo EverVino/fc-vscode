@@ -1,0 +1,181 @@
+---
+import { siteConfig } from "../config/site";
+---
+
+<footer class="border-t border-slate-200 bg-white">
+
+  <div class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+
+    <!-- Main footer content -->
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+
+      <!-- Brand -->
+      <div class="lg:col-span-2">
+
+        <a
+          href="/"
+          class="inline-flex items-center gap-3"
+          aria-label="{ siteConfig.name } home"
+        >
+          <span
+            class="flex h-9 w-9 items-center justify-center rounded-lg
+                   bg-slate-900 text-sm font-bold text-white"
+          >
+            FC
+          </span>
+
+          <span class="font-bold tracking-tight text-slate-900">
+            FreeCampus
+          </span>
+        </a>
+
+        <p class="mt-4 max-w-md text-sm leading-6 text-slate-600">
+          Free and open learning resources for science, technology,
+          and programming.
+        </p>
+
+        <p class="mt-3 max-w-md text-sm leading-6 text-slate-600">
+          Learn VS Code step by step and build the skills you need
+          for your everyday development workflow.
+        </p>
+
+      </div>
+
+
+      <!-- Course navigation -->
+      <div>
+        <h2 class="text-sm font-semibold text-slate-900">
+          { siteConfig.course}
+        </h2>
+
+        <ul class="mt-4 space-y-3 text-sm">
+
+          <li>
+            <a
+              href="/vscode/"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              Course
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="/vscode/units/"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              Units
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="/vscode/units/01-installation/"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              Start learning
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="/vscode/about/"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              About the course
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+
+      <!-- Community -->
+      <div>
+        <h2 class="text-sm font-semibold text-slate-900">
+          Community
+        </h2>
+
+        <ul class="mt-4 space-y-3 text-sm">
+
+          <li>
+            <a
+              href="https://github.com/OpenScienceLabs"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              GitHub
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://opensciencelabs.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              OpenScienceLabs
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://discord.gg/5FXuuakm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-600 transition hover:text-slate-900"
+            >
+              Discord
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+
+    <!-- Bottom section -->
+    <div
+      class="mt-12 flex flex-col gap-4 border-t border-slate-200
+             pt-8 sm:flex-row sm:items-center sm:justify-between"
+    >
+
+      <p class="text-sm text-slate-500">
+        © 2026 FreeCampus. Open learning for everyone.
+      </p>
+
+      <div class="flex gap-5 text-sm">
+
+        <a
+          href="/privacy/"
+          class="text-slate-500 transition hover:text-slate-900"
+        >
+          Privacy
+        </a>
+
+        <a
+          href="/contributing/"
+          class="text-slate-500 transition hover:text-slate-900"
+        >
+          Contribute
+        </a>
+
+        <a
+          href="https://github.com/OpenScienceLabs"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-slate-500 transition hover:text-slate-900"
+        >
+          GitHub
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
