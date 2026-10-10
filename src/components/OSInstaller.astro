@@ -10,24 +10,8 @@ const operatingSystems = [
       "Download and run the Windows installer.",
       "Follow the installation wizard.",
     ],
-    commands: [
-      {
-        label: "Using WinGet",
-        language: "powershell",
-        code: "winget install Microsoft.VisualStudioCode",
-      },
-    ],
-  },
-  {
-    id: "macos",
-    label: "macOS",
-    guide: "https://code.visualstudio.com/docs/setup/mac",
-    steps: [
-      "Download the macOS version of VS Code.",
-      "Open the downloaded .dmg file.",
-      "Drag Visual Studio Code into Applications.",
-    ],
     commands: [],
+    check: [],
   },
   {
     id: "linux",
@@ -49,6 +33,13 @@ const operatingSystems = [
         code: "sudo dnf install code",
       },
     ],
+    check: [
+      {
+        label: "Linux",
+        language: "bash",
+        code: "code --version"
+      }
+    ]
   },
 ];
 ---
@@ -118,18 +109,52 @@ const operatingSystems = [
           </div>
         )}
 
+        {os.check.length > 0 && (
+          
+          <div class="mt-5 space-y-4">
+            <p>To check if VSCode was correctly installed use:</p>
+            {os.check.map((command) => (
+              <section>
+                <h4 class="mb-2 font-medium">{command.label}</h4>
+
+                <div class="overflow-hidden rounded-lg bg-slate-900">
+                  <div class="flex items-center justify-between border-b border-slate-700 px-4 py-2">
+                    <span class="text-xs text-slate-400">
+                      {command.language}
+                    </span>
+
+                    <button
+                      type="button"
+                      data-copy={command.code}
+                      class="text-xs text-slate-300 hover:text-white"
+                    >
+                      Copy
+                    </button>
+                  </div>
+
+                  <pre class="overflow-x-auto p-4 text-sm text-slate-100"><code>{command.code}</code></pre>
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+
         <a
           href={os.guide}
           target="_blank"
           rel="noopener noreferrer"
           class="mt-5 inline-block font-semibold text-blue-600 hover:text-blue-700"
         >
-          View {os.label} installation guide →
+          View official {os.label} installation guide
         </a>
       </div>
     ))}
   </div>
+</section>
 
+<section class="mt-5 rounded-xl border border-slate-200 bg-white p-3 sm:p-5">
+  <p>Want more choices for the installation?</p>
+  <p>Check the official webpage</p>
   <a
     href="https://code.visualstudio.com/download"
     target="_blank"
@@ -152,7 +177,7 @@ const operatingSystems = [
     );
 
     function selectOS(os: string, updateURL = true) {
-      const validOS = ["windows", "macos", "linux"];
+      const validOS = ["windows", "linux"];
 
       if (!validOS.includes(os)) return;
 
@@ -204,7 +229,7 @@ const operatingSystems = [
       window.location.search
     ).get("os");
 
-    const initialOS = buttons.some(
+    const initialOS = Array.from(buttons).some(
       (button) => button.dataset.osChoice === requestedOS
     )
       ? requestedOS!
