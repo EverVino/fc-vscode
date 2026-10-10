@@ -2,31 +2,40 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import UnitSidebar from "../../components/UnitSidebar.astro";
-import OSInstaller from "../../components/OSInstaller.astro";
 
 export async function getStaticPaths() {
   const units = await getCollection("units");
 
   return units.map((unit) => ({
     params: { slug: unit.id },
-    props: {
-      unit,
-      units,
-    },
+    props: { unit, units },
   }));
 }
 
 const { unit, units } = Astro.props;
 const { Content } = await render(unit);
+
+const sortedUnits = [...units].sort(
+  (a, b) => a.data.unit_order - b.data.unit_order,
+);
+
+const currentIndex = sortedUnits.findIndex((item) => item.id === unit.id);
+
+const previousUnit =
+  currentIndex > 0 ? sortedUnits[currentIndex - 1] : undefined;
+
+const nextUnit =
+  currentIndex < sortedUnits.length - 1
+    ? sortedUnits[currentIndex + 1]
+    : undefined;
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout>
   <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-8 lg:flex-row">
-      <UnitSidebar
-        units={units}
-        currentUnitId={unit.id}
-      />
+      <UnitSidebar units={units} currentUnitId={unit.id} />
 
       <main class="min-w-0 flex-1">
         <header class="mb-8 border-b border-slate-200 pb-6">
@@ -38,14 +47,42 @@ const { Content } = await render(unit);
             {unit.data.title}
           </h1>
 
-          <p class="mt-4 text-lg text-slate-600">
-            {unit.data.description}
-          </p>
+          <p class="mt-4 text-lg text-slate-600">{unit.data.description}</p>
         </header>
 
         <article class="prose prose-slate max-w-none">
           <Content />
         </article>
+        <nav
+          aria-label="Unit navigation"
+          class="mt-12 grid grid-cols-1 gap-4 border-t border-slate-200 pt-6 sm:grid-cols-2"
+        >
+          {previousUnit ? (
+            <a
+              href={`${baseUrl}units/${previousUnit.id}/`}
+              class="group rounded-xl border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-slate-50"
+            >
+              <span class="text-sm text-slate-500">← Previous unit</span>
+              <span class="mt-1 block font-semibold text-slate-800 group-hover:text-blue-700">
+                {previousUnit.data.title}
+              </span>
+            </a>
+          ) : (
+            <div></div>
+          )}
+
+          {nextUnit && (
+            <a
+              href={`${baseUrl}units/${nextUnit.id}/`}
+              class="group rounded-xl border border-slate-200 p-4 text-left transition-colors hover:border-blue-300 hover:bg-slate-50 sm:text-right"
+            >
+              <span class="text-sm text-slate-500">Next unit →</span>
+              <span class="mt-1 block font-semibold text-slate-800 group-hover:text-blue-700">
+                {nextUnit.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
       </main>
     </div>
   </div>
