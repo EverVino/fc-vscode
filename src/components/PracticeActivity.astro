@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { title = "Practice activity", description, tasks } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <section
@@ -20,7 +21,7 @@ const { title = "Practice activity", description, tasks } = Astro.props;
                     aria-hidden="true"
                 >
                     <svg class="size-6 text-blue-600 justify-center">
-                        <use href="/icons/icons.svg#light"></use>
+                        <use href={`${baseUrl}/icons/icons.svg#light`}></use>
                     </svg>
                 </div>
                 <p
