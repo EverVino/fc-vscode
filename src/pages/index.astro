@@ -9,7 +9,7 @@ const units = (await getCollection("units")).sort(
 const baseUrl = import.meta.env.BASE_URL;
 
 const unitUrl = (unit) =>
-  `${baseUrl}units/${unit.id.replace(/\/index$/, "")}/`;
+  `${baseUrl}/units/${unit.id.replace(/\/index$/, "")}/`;
 
 const firstUnit = units[0];
 

@@ -27,7 +27,7 @@ const baseUrl = import.meta.env.BASE_URL;
     <ul class="space-y-1">
       {sortedUnits.map((unit) => {
         const isCurrent = unit.id === currentUnitId;
-        const href = `${baseUrl}units/${unit.id}/`;
+        const href = `${baseUrl}/units/${unit.id}/`;
 
         return (
           <li>

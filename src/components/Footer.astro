@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../config/site";
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <footer class="border-t border-slate-200 bg-white">
@@ -13,7 +14,7 @@ import { siteConfig } from "../config/site";
       <div class="lg:col-span-2">
 
         <a
-          href="/"
+          href={baseUrl}
           class="inline-flex items-center gap-3"
           aria-label="{ siteConfig.name } home"
         >
@@ -52,7 +53,7 @@ import { siteConfig } from "../config/site";
 
           <li>
             <a
-              href="/vscode/"
+              href={baseUrl}
               class="text-slate-600 transition hover:text-slate-900"
             >
               Course
@@ -61,7 +62,7 @@ import { siteConfig } from "../config/site";
 
           <li>
             <a
-              href="/vscode/units/"
+              href={`${baseUrl}/units/`}
               class="text-slate-600 transition hover:text-slate-900"
             >
               Units
@@ -70,7 +71,7 @@ import { siteConfig } from "../config/site";
 
           <li>
             <a
-              href="/vscode/units/01-installation/"
+              href={`${baseUrl}/units/01-installation/`}
               class="text-slate-600 transition hover:text-slate-900"
             >
               Start learning
@@ -79,7 +80,7 @@ import { siteConfig } from "../config/site";
 
           <li>
             <a
-              href="/vscode/about/"
+              href={`${baseUrl}/about/`}
               class="text-slate-600 transition hover:text-slate-900"
             >
               About the course
@@ -109,28 +110,6 @@ import { siteConfig } from "../config/site";
             </a>
           </li>
 
-          <li>
-            <a
-              href="https://opensciencelabs.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-slate-600 transition hover:text-slate-900"
-            >
-              OpenScienceLabs
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://discord.gg/5FXuuakm"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-slate-600 transition hover:text-slate-900"
-            >
-              Discord
-            </a>
-          </li>
-
         </ul>
       </div>
 
@@ -150,21 +129,14 @@ import { siteConfig } from "../config/site";
       <div class="flex gap-5 text-sm">
 
         <a
-          href="/privacy/"
-          class="text-slate-500 transition hover:text-slate-900"
-        >
-          Privacy
-        </a>
-
-        <a
-          href="/contributing/"
+          href={`${baseUrl}/contributing/`}
           class="text-slate-500 transition hover:text-slate-900"
         >
           Contribute
         </a>
 
         <a
-          href="https://github.com/OpenScienceLabs"
+          href=`${siteConfig.github}`
           target="_blank"
           rel="noopener noreferrer"
           class="text-slate-500 transition hover:text-slate-900"

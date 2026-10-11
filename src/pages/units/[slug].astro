@@ -59,7 +59,7 @@ const baseUrl = import.meta.env.BASE_URL;
         >
           {previousUnit ? (
             <a
-              href={`${baseUrl}units/${previousUnit.id}/`}
+              href={`${baseUrl}/units/${previousUnit.id}/`}
               class="group rounded-xl border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-slate-50"
             >
               <span class="text-sm text-slate-500">← Previous unit</span>
@@ -73,7 +73,7 @@ const baseUrl = import.meta.env.BASE_URL;
 
           {nextUnit && (
             <a
-              href={`${baseUrl}units/${nextUnit.id}/`}
+              href={`${baseUrl}/units/${nextUnit.id}/`}
               class="group rounded-xl border border-slate-200 p-4 text-left transition-colors hover:border-blue-300 hover:bg-slate-50 sm:text-right"
             >
               <span class="text-sm text-slate-500">Next unit →</span>
