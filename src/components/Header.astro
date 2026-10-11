@@ -1,155 +1,262 @@
 ---
 import { siteConfig } from "../config/site";
+
+const baseUrl = import.meta.env.BASE_URL;
+
+const navigation = [
+  { label: "Home", href: baseUrl },
+  { label: "Units", href: `${baseUrl}units/` },
+  { label: "FAQ", href: `${baseUrl}faq/` },
+  { label: "About", href: `${baseUrl}about/` },
+];
+
+const startUrl = `${baseUrl}units/01-installation/`;
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 ---
 
-<header class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-    <nav
-        class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8"
-        aria-label="Main navigation"
+<header
+  class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl"
+  data-site-header
+>
+  <nav
+    class="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8"
+    aria-label="Main navigation"
+  >
+    <!-- Brand -->
+    <a
+      href={baseUrl}
+      class="group flex min-w-0 items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600"
+      aria-label={`${siteConfig.name} ${siteConfig.course} home`}
     >
-        <!-- Brand -->
-        <div class="flex gap-8">
-            <a
-                href="/"
-                class="flex items-center gap-3"
-                aria-label=`${ siteConfig.name } home`
-            >
-                <!-- FreeCampus mark -->
-                <svg class="size-8">
-                    <use href="/icons/icons.svg#freecampus"/>
-                </svg>
-                <div class="hidden sm:block font-bold text-2xl">
-                    <span class="tracking-tight text-slate-900">
-                        { siteConfig.name }
-                    </span>
-                    <span class="ml-1 text-slate-600">{ siteConfig.course }</span>
-                </div>
-            </a>
-            <!-- Desktop navigation -->
-            <div class="hidden items-center gap-1 md:flex text-xl">
-                <a
-                    href="/"
-                    class="rounded-md px-3 py-2 font-medium
-                   text-slate-900 hover:bg-slate-100"
-                >
-                    Home
-                </a>
-                <a
-                    href="/units/"
-                    class="rounded-md px-3 py-2 font-medium
-                   text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                >
-                    Units
-                </a>
-                <a
-                    href="/faq/"
-                    class="rounded-md px-3 py-2 font-medium
-                   text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                >
-                    FAQ
-                </a>
-                <a
-                    href="/about/"
-                    class="rounded-md px-3 py-2 font-medium
-                   text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                >
-                    About
-                </a>
-            </div>
-        </div>
-
-        <!-- Right side -->
-        <div class="hidden items-center gap-3 md:flex">
-            <!-- GitHub -->
-            <a
-                href={ siteConfig.github }
-                target="_blank"
-                rel="noopener noreferrer"
-                class="rounded-md p-2 text-slate-500
-               hover:bg-slate-100 hover:text-slate-900"
-                aria-label="FreeCampus on GitHub"
-            >
-            <svg class="size-8">
-                <use href="/icons/icons.svg#github"/>
-            </svg>
-
-            </a>
-            <!-- TODO: replace this for an search icon -->
-            <!-- Start course -->
-            <a
-                href="/units/01-installation/"
-                class="rounded-lg bg-blue-600 px-4 py-2 text-sm
-               font-semibold text-white shadow-sm
-               hover:bg-blue-700"
-            >
-                Start learning
-            </a>
-        </div>
-
-        <!-- Mobile menu button -->
-        <button
-            type="button"
-            class="rounded-md p-2 text-slate-600 hover:bg-slate-100
-             hover:text-slate-900 md:hidden"
-            aria-label="Open navigation menu"
-            aria-expanded="false"
-            aria-controls="mobile-menu"
+      <span
+        class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 transition group-hover:bg-blue-100"
+      >
+        <svg
+          class="size-7 text-blue-700"
+          aria-hidden="true"
+          focusable="false"
         >
-            <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                />
-            </svg>
-        </button>
-    </nav>
+          <use href={`${baseUrl}icons/icons.svg#freecampus`} />
+        </svg>
+      </span>
 
-    <!-- Mobile navigation -->
-    <div
-        id="mobile-menu"
-        class="hidden border-t border-slate-200 bg-white md:hidden"
-    >
-        <div class="space-y-1 px-6 py-4">
-            <a
-                href="/vscode/"
-                class="block rounded-md px-3 py-2 text-sm font-medium
-               text-slate-900 hover:bg-slate-100"
-            >
-                Course
-            </a>
+      <span class="flex min-w-0 flex-col leading-tight">
+        <span class="truncate text-base font-bold tracking-tight text-slate-950 sm:text-lg">
+          {siteConfig.name}
+        </span>
+        <span class="truncate text-xs font-medium text-slate-500">
+          {siteConfig.course}
+        </span>
+      </span>
+    </a>
 
-            <a
-                href="/vscode/units/"
-                class="block rounded-md px-3 py-2 text-sm font-medium
-               text-slate-600 hover:bg-slate-100"
-            >
-                Units
-            </a>
+    <!-- Desktop navigation -->
+    <div class="hidden items-center gap-1 md:flex">
+      {navigation.map((item) => {
+        const itemPath = item.href.replace(/\/+$/, "") || "/";
+        const isCurrent = currentPath === itemPath;
 
-            <a
-                href="/vscode/about/"
-                class="block rounded-md px-3 py-2 text-sm font-medium
-               text-slate-600 hover:bg-slate-100"
-            >
-                About
-            </a>
-
-            <a
-                href="/vscode/units/01-installation/"
-                class="mt-3 block rounded-lg bg-blue-600 px-4 py-2.5
-               text-center text-sm font-semibold text-white
-               hover:bg-blue-700"
-            >
-                Start learning
-            </a>
-        </div>
+        return (
+          <a
+            href={item.href}
+            aria-current={isCurrent ? "page" : undefined}
+            class:list={[
+              "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600",
+              isCurrent
+                ? "bg-blue-50 text-blue-700"
+                : "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
     </div>
+
+    <!-- Desktop actions -->
+    <div class="hidden shrink-0 items-center gap-3 md:flex">
+      <a
+        href={siteConfig.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex size-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        aria-label={`${siteConfig.name} on GitHub (opens in a new tab)`}
+      >
+        <svg
+          class="size-5"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <use href={`${baseUrl}icons/icons.svg#github`} />
+        </svg>
+      </a>
+
+      <a
+        href={startUrl}
+        class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      >
+        Start learning
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="size-4"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 12h14m-6-6 6 6-6 6"
+          />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Mobile menu toggle -->
+    <button
+      type="button"
+      class="flex size-10 shrink-0 items-center justify-center rounded-xl text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 md:hidden"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <svg
+        data-menu-icon="open"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        class="size-6"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 7h16M4 12h16M4 17h16"
+        />
+      </svg>
+
+      <svg
+        data-menu-icon="close"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        class="hidden size-6"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m6 6 12 12M18 6 6 18"
+        />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile navigation -->
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-slate-200 bg-white md:hidden"
+    data-mobile-menu
+  >
+    <div class="mx-auto max-w-7xl space-y-1 px-5 py-4 sm:px-8">
+      {navigation.map((item) => {
+        const itemPath = item.href.replace(/\/+$/, "") || "/";
+        const isCurrent = currentPath === itemPath;
+
+        return (
+          <a
+            href={item.href}
+            aria-current={isCurrent ? "page" : undefined}
+            class:list={[
+              "block rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+              isCurrent
+                ? "bg-blue-50 text-blue-700"
+                : "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+
+      <div class="flex items-center gap-3 border-t border-slate-100 pt-4">
+        <a
+          href={siteConfig.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950"
+        >
+          <svg
+            class="size-5"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <use href={`${baseUrl}icons/icons.svg#github`} />
+          </svg>
+          GitHub
+        </a>
+
+        <a
+          href={startUrl}
+          class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+        >
+          Start learning
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </header>
+
+<script>
+  document.querySelectorAll("[data-site-header]").forEach((header) => {
+    const toggle =
+      header.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+    const menu = header.querySelector<HTMLElement>("[data-mobile-menu]");
+    const openIcon = header.querySelector<SVGElement>(
+      '[data-menu-icon="open"]',
+    );
+    const closeIcon = header.querySelector<SVGElement>(
+      '[data-menu-icon="close"]',
+    );
+
+    if (!toggle || !menu || !openIcon || !closeIcon) return;
+
+    function setMenuOpen(isOpen: boolean) {
+      menu.classList.toggle("hidden", !isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      toggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu",
+      );
+
+      openIcon.classList.toggle("hidden", isOpen);
+      closeIcon.classList.toggle("hidden", !isOpen);
+    }
+
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      setMenuOpen(!isOpen);
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setMenuOpen(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 768px)").matches) {
+        setMenuOpen(false);
+      }
+    });
+  });
+</script>

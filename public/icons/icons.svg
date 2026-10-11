@@ -67,4 +67,18 @@
     />
   </symbol>
 
+  <symbol 
+    id="light"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M9 18h6m-5 3h4m-2-19a7 7 0 0 0-4 12.745c.5.35 1 1.255 1 2.255h6c0-1 .5-1.905 1-2.255A7 7 0 0 0 12 2Z"
+    />
+  </symbol>
+
 </svg>
