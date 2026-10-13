@@ -6,6 +6,7 @@ unit_level: Beginner
 estimated_time: "10 min"
 publication_date: 2026-10-10
 ---
+import PracticeActivity from "../../../components/PracticeActivity.astro";
 
 VS Code provides many useful features out of the box, but you can extend its functionality by installing extensions.
 
@@ -52,8 +53,6 @@ Reviews and usage information: What do other users report? Treat popularity as o
 
 You don't need all of these extensions. Choose the ones that fit your work and the types of files you use.
 
-### Markdown and documentation
-
 **Markdown All in One**
 Helps with common Markdown editing tasks, such as keyboard shortcuts, lists, and table of contents generation.
 Useful if you write documentation, notes, tutorials, or Markdown-based websites.
@@ -71,14 +70,34 @@ Spell-checking extensions may flag technical terms, identifiers, or words that a
 For programming languages such as Python, JavaScript, or C++, language extensions can provide features like code completion, diagnostics, debugging support, and formatting integrations.
 Choose an extension that matches the language you're learning, and check whether it requires a separately installed runtime, compiler, or tool.
 
->Important: Extension availability and features can change. Check the extension's current documentation and requirements before installing it.
+>Important: Extension availability and features can change. 
+>Check the extension's current documentation and requirements before installing it.
 
+## Example: Install a color theme
+
+ADD  A GIF INSTALLING A EXTENSION
+
+Let's customize the appearance of VS Code by installing the classic gruvbox theme.
+
+1. Open VS Code's Extensions view with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>.
+2. Search for Gruvbox.
+3. Verify that the publisher is `jdinhlife` and the extension matches the official listing above.
+4. Click Install.
+5. Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> and run Preferences: Color Theme (you can type theme and Preference theme should appear as a choice).
+6. Select your preferred Gruvbox variant (I'd chose the dark one).
+
+The editor's appearance should change immediately.
+
+Try it: Switch between the light and dark variants, then choose the one you prefer. 
+You can always return to your previous theme using the same Color Theme menu.
+
+_Some popular themes are: zenbones, and Catpuchin, give it a try. Just do not forget about the security recommendations below_
 
 ## Extension security and good practices
 
 Extensions can be powerful because they may run code, inspect project files, or communicate with external services. Installing an extension therefore requires some care.
 
-Follow these practices:
+**Follow these practices:**
 
 - Install extensions from a trusted source, and verify the publisher.
 - Read the extension description and documentation before installing it.
@@ -88,22 +107,22 @@ Follow these practices:
 - Be cautious when opening unfamiliar projects, especially if an extension asks you to run commands or execute code.
 - The Marketplace listing and its publisher information are useful starting points, but they do not guarantee that an extension is safe.
 
-Practice activity
+## A little info about your practice Activity
 
-Let's customize VS Code for writing Markdown documentation.
+Markdown is a document type that is so popular in code development because is used in documentation
+Whenever you see a file with the extension `.md` you can be sure that is a markdown file,
+It is expected for every code project to have a `README.md` this is used to explain about the project
+you can check its rules for writting markdown docs in this guide [Markdown Guide](https://www.markdownguide.org/basic-syntax/).
 
-Open the Extensions view.
-
-Search for Markdown All in One.
-
-Review its description and publisher.
-
-Install it if it fits your needs.
-
-Open a Markdown file and try one of its features.
-
-Find the extension in the installed extensions list.
-
-Locate the options to disable or uninstall it.
-
-If you don't want to install an extension, you can complete the first three tasks just by exploring its Marketplace listing.
+<PracticeActivity
+  description="Let's customize VS Code for writing Markdown documentation."
+  tasks={[
+    "Open the Extensions view.",
+    "Search for Markdown All in One.",
+    "Review its description and publisher.",
+    "Install it if it fits your needs.",
+    "Open a Markdown file and try one of its features.",
+    "Find the extension in the installed extensions list.",
+    "If you don't want to install an extension, you can complete the first three tasks just by exploring its Marketplace listing.",
+  ]}
+/>
