@@ -1,0 +1,45 @@
+
+---
+interface Props {
+  headings: string[];
+  rows: string[][];
+  compact?: boolean;
+}
+
+const { headings, rows, compact = false } = Astro.props;
+---
+
+<div class="not-prose overflow-x-auto rounded-lg border border-slate-200">
+  <table class="w-full border-collapse text-left text-sm">
+    <thead class="bg-slate-100 text-slate-800">
+      <tr>
+        {headings.map((heading) => (
+          <th
+            scope="col"
+            class:list={[
+              "font-semibold",
+              compact ? "px-3 py-2" : "px-4 py-3",
+            ]}
+          >
+            {heading}
+          </th>
+        ))}
+      </tr>
+    </thead>
+
+    <tbody class="divide-y divide-slate-200">
+      {rows.map((row) => (
+        <tr class="transition-colors hover:bg-slate-50">
+          {row.map((cell) => (
+            <td class:list={[
+              "text-slate-700",
+              compact ? "px-3 py-2" : "px-4 py-3",
+            ]}>
+              {cell}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
